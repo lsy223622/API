@@ -1,5 +1,5 @@
 <?php
-$plain = $_GET['plain'] ?? "0";
+$plain = $_GET['plain'] ?? "1";
 if ($plain !== "1") {
     ?>
     <!DOCTYPE html>
