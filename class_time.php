@@ -31,7 +31,7 @@ foreach ($vevents as $vevent) {
   $dtend->setTimezone($timezone); // 设置时区为UTC+8
   if ($now >= $dtstart && $now <= $dtend) {
     // 当前有课程
-    $data['summary'] = (string)$vevent->SUMMARY;
+    $data['summary'] = (string) $vevent->SUMMARY;
     $data['start_time'] = $dtstart->format('Y-m-d H:i:s');
     $data['end_time'] = $dtend->format('Y-m-d H:i:s');
     break;
