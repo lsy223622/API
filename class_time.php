@@ -21,14 +21,18 @@ $vcalendar = $reader->read($ical);
 $vevents = $vcalendar->VEVENT;
 
 // 初始化数据
-$data = [];
+$data = [
+  'summary' => '0',
+  'start_time' => null,
+  'end_time' => null,
+];
 
 // 遍历所有课程，检查是否有课程与当前时间匹配
 foreach ($vevents as $vevent) {
   $dtstart = new DateTime($vevent->DTSTART);
   $dtend = new DateTime($vevent->DTEND);
-  $dtstart->setTimezone($timezone); // 设置时区为UTC+8
-  $dtend->setTimezone($timezone); // 设置时区为UTC+8
+  $dtstart->setTimezone($timezone); // 设置时区为 UTC+8
+  $dtend->setTimezone($timezone); // 设置时区为 UTC+8
   if ($now >= $dtstart && $now <= $dtend) {
     // 当前有课程
     $data['summary'] = (string) $vevent->SUMMARY;
@@ -46,8 +50,8 @@ if (!isset($data['summary'])) {
   foreach ($vevents as $vevent) {
     $dtstart = new DateTime($vevent->DTSTART);
     $dtend = new DateTime($vevent->DTEND);
-    $dtstart->setTimezone($timezone); // 设置时区为UTC+8
-    $dtend->setTimezone($timezone); // 设置时区为UTC+8
+    $dtstart->setTimezone($timezone); // 设置时区为 UTC+8
+    $dtend->setTimezone($timezone); // 设置时区为 UTC+8
     if ($now < $dtstart) {
       $next_start_time = $dtstart->format('Y-m-d H:i:s');
       break;
@@ -60,6 +64,6 @@ if (!isset($data['summary'])) {
   $data['end_time'] = $next_start_time;
 }
 
-// 输出JSON
+// 输出 JSON
 header('Content-Type: application/json');
 echo json_encode($data);
