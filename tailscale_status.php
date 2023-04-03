@@ -25,9 +25,9 @@ if ($plain !== "1") {
 $file = fopen("data/tailscale_status.txt", "r") or die("Unable to open file!");
 $content = fread($file, filesize("data/tailscale_status.txt"));
 fclose($file);
-
-$content = str_replace(' ', '&nbsp;', $content); // 将空格替换为 &nbsp;
-
+if ($plain !== "1") {
+    $content = str_replace(' ', '&nbsp;', $content); // 将空格替换为 &nbsp;
+}
 echo nl2br($content);
 ?>
     <?php
