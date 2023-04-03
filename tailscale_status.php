@@ -1,40 +1,28 @@
 <?php
-$plain = $_GET['plain'] ?? "1";
-if ($plain !== "1") {
-    ?>
-    <!DOCTYPE html>
-    <html>
-
-    <head>
-        <style type="text/css">
-            @font-face {
-                font-family: "Source Code Pro";
-                src: url("https://fonts.gstatic.com/s/sourcecodepro/v15/HI_SiYsKILh3Ug7L8hQfeg.ttf");
-            }
-
-            body {
-                font-family: "Source Code Pro", monospace;
-            }
-        </style>
-    </head>
-
-    <body>
-
-        <?php
-}
 $file = fopen("data/tailscale_status.txt", "r") or die("Unable to open file!");
 $content = fread($file, filesize("data/tailscale_status.txt"));
 fclose($file);
-if ($plain !== "1") {
-    $content = str_replace(' ', '&nbsp;', $content); // 将空格替换为 &nbsp;
-}
-echo nl2br($content);
-?>
-    <?php
-    if ($plain !== "1") {
-        ?>
-    </body>
 
-    </html>
-    <?php
+// 拆分每行数据为数组
+$lines = explode("\n", $content);
+
+// 遍历数组，将每行数据拆分为 key-value 对
+$data = array();
+foreach ($lines as $line) {
+    $line = trim($line);
+    if (!empty($line)) {
+        $cols = preg_split('/\s+/', $line, 5);
+        $note = isset($cols[4]) ? $cols[4] : '';
+        $data[] = array(
+            'ip' => $cols[0],
+            'name' => $cols[1],
+            'user' => $cols[2],
+            'os' => $cols[3],
+            'note' => $note
+        );
     }
+}
+
+// 转换为 JSON 格式输出
+header('Content-Type: application/json');
+echo json_encode($data);
