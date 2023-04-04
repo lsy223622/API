@@ -45,12 +45,11 @@ usort($event_data, function ($a, $b) {
     return $a['start_time'] - $b['start_time'];
 });
 
-// 循环遍历已排序的事件数组，并将每个事件存储到数据库中
 foreach ($event_data as $event) {
     $start_time = date('Y-m-d H:i:s', $event['start_time']);
     $end_time = date('Y-m-d H:i:s', $event['end_time']);
     $course = $event['summary'];
-    $location = $vevent->LOCATION ? trim($vevent->LOCATION) : 'Unknown';
+    $location = isset($event['location']) ? trim($event['location']) : 'Unknown';
 
     $sql = "INSERT INTO class_time (start_time, end_time, course, location) VALUES ('$start_time', '$end_time', '$course', '$location')";
 
