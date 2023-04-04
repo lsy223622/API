@@ -52,7 +52,7 @@ foreach ($event_data as $event) {
     $course = $event['summary'];
     $location = $vevent->LOCATION ? trim($vevent->LOCATION) : 'Unknown';
 
-    $sql = "INSERT INTO events (start_time, end_time, course, location) VALUES ('$start_time', '$end_time', '$course', '$location')";
+    $sql = "INSERT INTO class_time (start_time, end_time, course, location) VALUES ('$start_time', '$end_time', '$course', '$location')";
 
     // 执行 SQL 语句
     $result = $db->query($sql);
