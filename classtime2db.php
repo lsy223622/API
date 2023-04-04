@@ -30,6 +30,9 @@ foreach ($vcalendar->VEVENT as $vevent) {
     $end_time = strtotime($vevent->DTEND->getValue());
     $summary = explode(" @ ", $vevent->SUMMARY->getValue())[0];
     $location = $vevent->LOCATION->getValue();
+    if ($location === "") {
+        $location = "Unknown";
+    }
 
     // 将事件数据存储到数组中
     $event_data[] = array(
@@ -45,12 +48,14 @@ usort($event_data, function ($a, $b) {
     return $a['start_time'] - $b['start_time'];
 });
 
+// 循环遍历所有事件
 foreach ($event_data as $event) {
     $start_time = date('Y-m-d H:i:s', $event['start_time']);
     $end_time = date('Y-m-d H:i:s', $event['end_time']);
     $course = $event['summary'];
-    $location = isset($event['location']) ? trim($event['location']) : 'Unknown';
+    $location = $event['location'];
 
+    // 构建 SQL 语句
     $sql = "INSERT INTO class_time (start_time, end_time, course, location) VALUES ('$start_time', '$end_time', '$course', '$location')";
 
     // 执行 SQL 语句
