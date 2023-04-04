@@ -41,7 +41,7 @@ foreach ($vcalendar->VEVENT as $vevent) {
 }
 
 // 按照开始时间对事件进行排序
-usort($event_data, function($a, $b) {
+usort($event_data, function ($a, $b) {
     return $a['start_time'] - $b['start_time'];
 });
 
@@ -50,7 +50,7 @@ foreach ($event_data as $event) {
     $start_time = date('Y-m-d H:i:s', $event['start_time']);
     $end_time = date('Y-m-d H:i:s', $event['end_time']);
     $course = $event['summary'];
-    $location = $event['location'];
+    $location = $vevent->LOCATION ? trim($vevent->LOCATION) : 'Unknown';
 
     $sql = "INSERT INTO events (start_time, end_time, course, location) VALUES ('$start_time', '$end_time', '$course', '$location')";
 
