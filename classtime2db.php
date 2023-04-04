@@ -29,7 +29,7 @@ foreach ($vcalendar->VEVENT as $vevent) {
     $start_time = strtotime($vevent->DTSTART->getValue());
     $end_time = strtotime($vevent->DTEND->getValue());
     $summary = explode(" @ ", $vevent->SUMMARY->getValue())[0];
-    $location = trim($vevent->LOCATION->getTextValue()) ?: 'Unknown';
+    $location = $vevent->LOCATION->getValue();
 
     // 将事件数据存储到数组中
     $event_data[] = array(
@@ -49,7 +49,7 @@ foreach ($event_data as $event) {
     $start_time = date('Y-m-d H:i:s', $event['start_time']);
     $end_time = date('Y-m-d H:i:s', $event['end_time']);
     $course = $event['summary'];
-    $location = $event['location'];
+    $location = isset($event['location']) ? trim($event['location']) : 'Unknown';
 
     $sql = "INSERT INTO class_time (start_time, end_time, course, location) VALUES ('$start_time', '$end_time', '$course', '$location')";
 
