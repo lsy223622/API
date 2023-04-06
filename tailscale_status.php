@@ -12,13 +12,15 @@ foreach ($lines as $line) {
     $line = trim($line);
     if (!empty($line)) {
         $cols = preg_split('/\s+/', $line, 5);
-        $note = isset($cols[4]) ? $cols[4] : '';
+        $status = isset($cols[4]) ? $cols[4] : '';
+        if ($status === "-") {
+            $status = "online";
+        }
         $data[] = array(
             'ip' => $cols[0],
             'name' => $cols[1],
-            'user' => $cols[2],
-            'os' => $cols[3],
-            'note' => $note
+            'os' => $cols[2],
+            'status' => $status
         );
     }
 }
