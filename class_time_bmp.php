@@ -80,8 +80,8 @@ if ($start_time->format('Y-m-d H:i:s') == '2023-01-01 00:00:00') {
 } else {
     $text1 = $start_time->format('H:i') . " - " . $end_time->format('H:i');
 }
-if (strlen($course) > 14) {
-    $course = substr($course, 0, 14) . '…';
+if (mb_strlen($course, 'utf-8') > 14) {
+    $course = mb_substr($course, 0, 14, 'utf-8') . '…';
 }
 
 // 写入文本
