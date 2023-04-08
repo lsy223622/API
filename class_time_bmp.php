@@ -71,25 +71,23 @@ $font16px = 'data/fhpixel16px.ttf';
 $font12px = 'data/fhpixel12px.ttf';
 
 // 计算文本在位图中的位置
-$font16_size = 12; // 字体大小
-$font12_size = 8; // 字体大小
-// $bbox = imagettfbbox($font_size, 0, $font, $text);
-// $font_width = $bbox[2] - $bbox[0];
-// $font_height = $bbox[1] - $bbox[7];
-// $x = (250 - $font_width) / 2;
-// $y = (122 - $font_height) / 2 + $font_height;
+$font16px_size = 12; // 字体大小
+$font12px_size = 9; // 字体大小
 
 // 处理文本
-if ($start_time == '2023-01-01 00:00:00') {
+if ($start_time->format('Y-m-d H:i:s') == '2023-01-01 00:00:00') {
     $text1 = "下一节: " . $end_time->format('H:i');
 } else {
     $text1 = $start_time->format('H:i') . " - " . $end_time->format('H:i');
 }
+if (strlen($course) > 14) {
+    $text = substr($course, 0, 14) . '…';
+}
 
 // 写入文本
 $black = imagecolorallocate($image, 0, 0, 0);
-imagettftext($image, $font12px_size, 0, 4, 107, $black, $font12px, $text1);
-imagettftext($image, $font16px_size, 0, 82, 106, $black, $font16px, $course);
+imagettftext($image, $font12px_size, 0, 3, 100, $black, $font12px, $text1);
+imagettftext($image, $font16px_size, 0, 3, 118, $black, $font16px, $course);
 
 // 输出位图
 imagebmp($image);
