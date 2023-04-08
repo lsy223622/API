@@ -73,11 +73,11 @@ $font12px = 'data/fhpixel12px.ttf';
 // 计算文本在位图中的位置
 $font16_size = 12; // 字体大小
 $font12_size = 8; // 字体大小
-$bbox = imagettfbbox($font_size, 0, $font, $text);
-$font_width = $bbox[2] - $bbox[0];
-$font_height = $bbox[1] - $bbox[7];
-$x = (250 - $font_width) / 2;
-$y = (122 - $font_height) / 2 + $font_height;
+// $bbox = imagettfbbox($font_size, 0, $font, $text);
+// $font_width = $bbox[2] - $bbox[0];
+// $font_height = $bbox[1] - $bbox[7];
+// $x = (250 - $font_width) / 2;
+// $y = (122 - $font_height) / 2 + $font_height;
 
 // 处理文本
 if ($start_time == '2023-01-01 00:00:00') {
