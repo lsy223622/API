@@ -69,8 +69,9 @@ imagefill($image, 0, 0, $white);
 // 加载TrueType字体
 $font16px = 'data/fhpixel16px.ttf';
 $font12px = 'data/fhpixel12px.ttf';
+$fonthmos = 'data/HarmonyOS_Sans_Medium.ttf';
 
-// 计算文本在位图中的位置
+// 定义像素字体的大小
 $font16px_size = 12; // 字体大小
 $font12px_size = 9; // 字体大小
 
@@ -81,13 +82,14 @@ if ($start_time->format('Y-m-d H:i:s') == '2023-01-01 00:00:00') {
     $text1 = $start_time->format('H:i') . " - " . $end_time->format('H:i');
 }
 if (mb_strlen($course, 'utf-8') > 14) {
-    $course = mb_substr($course, 0, 14, 'utf-8') . '...';
+    $course = mb_substr($course, 0, 14, 'utf-8') . '..';
 }
 
 // 写入文本
 $black = imagecolorallocate($image, 0, 0, 0);
 imagettftext($image, $font12px_size, 0, 3, 100, $black, $font12px, $text1);
 imagettftext($image, $font16px_size, 0, 3, 118, $black, $font16px, $course);
+imagettftext($image, 48, 0, 90, 96, $black, $fonthmos, $now->format('H:i'));
 
 // 输出位图
 imagebmp($image);
