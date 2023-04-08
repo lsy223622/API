@@ -81,7 +81,7 @@ if ($start_time->format('Y-m-d H:i:s') == '2023-01-01 00:00:00') {
     $text1 = $start_time->format('H:i') . " - " . $end_time->format('H:i');
 }
 if (strlen($course) > 14) {
-    $text = substr($course, 0, 14) . '…';
+    $course = substr($course, 0, 14) . '…';
 }
 
 // 写入文本
