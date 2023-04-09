@@ -89,7 +89,8 @@ if (mb_strlen($course, 'utf-8') > 14) {
 $black = imagecolorallocate($image, 0, 0, 0);
 imagettftext($image, $font12px_size, 0, 3, 100, $black, $font12px, $text1);
 imagettftext($image, $font16px_size, 0, 3, 118, $black, $font16px, $course);
-imagettftext($image, 48, 0, 90, 96, $black, $fonthmos, $now->format('H:i'));
+imagettftext($image, $font16px_size, 0, 160, 42, $black, $font16px, $now->format('Y-m-d'));
+imagettftext($image, 46, 0, 86, 96, $black, $fonthmos, $now->format('H:i'));
 
 // 输出位图
 imagebmp($image);
