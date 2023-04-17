@@ -69,6 +69,8 @@ echo json_encode(
         'course' => $course,
         'location' => $location
     )
+    ,
+    JSON_UNESCAPED_UNICODE
 );
 
 $db->close();

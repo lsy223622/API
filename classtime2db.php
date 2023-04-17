@@ -31,7 +31,7 @@ foreach ($vcalendar->VEVENT as $vevent) {
     $summary = explode(" @ ", $vevent->SUMMARY->getValue())[0];
     $location = $vevent->LOCATION->getValue();
     if ($location === "") {
-        $location = "Unknown";
+        $location = "NULL";
     }
 
     // 将事件数据存储到数组中
