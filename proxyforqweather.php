@@ -12,7 +12,7 @@ if (file_exists($cache_file) && time() - filemtime($cache_file) < $cache_time) {
     $json_data = file_get_contents($cache_file);
 } else {
     // 请求远程JSON文件并保存到本地
-    $json_data = file_get_contents('compress.zlib://https://devapi.qweather.com/v7/weather/now?location=' . $location . '&key=' . $key);
+    $json_data = file_get_contents('compress.zlib://https://devapi.qweather.com/v7/weather/now?location=' . $location . '&key=' . $key . '&lang=zh&unit=m');
     file_put_contents($cache_file, $json_data);
 }
 
