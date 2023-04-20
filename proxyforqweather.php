@@ -3,6 +3,12 @@
 $location = $_GET['location'];
 $key = $_GET['key'];
 
+// 如果没有有效参数，则返回错误信息
+if (empty($location) || empty($key)) {
+    echo '{"code":"400","msg":"Bad Request"}';
+    exit;
+}
+
 $cache_time = 3 * 60; // 缓存有效时间，单位为秒
 $cache_file = 'data/cached_qweather.json'; // 本地保存的JSON文件名
 
