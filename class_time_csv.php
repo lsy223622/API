@@ -1,5 +1,4 @@
 <?php
-
 // 导入数据库凭证
 require_once 'db_credentials.php';
 
@@ -17,38 +16,22 @@ $now = new DateTime();
 // 设置时区为 UTC+8
 $now->setTimezone(new DateTimeZone('Asia/Shanghai'));
 
-// 设置 $finish 为 false，用于循环
-$finish = false;
-
 // 初始化空数组用于保存数据
 $data = array();
 
-// 循环遍历数据库中的课程
-while ($finish === false) {
-    $finish = true;
+// 获取数据库中所有行数据
+$sql = "SELECT * FROM class_time ORDER BY id ASC";
+$result = $db->query($sql);
 
-    // 获取数据库中所有行数据
-    $sql = "SELECT * FROM class_time ORDER BY id ASC";
+// 删除已经结束的课程，并保存剩余的课程数据
+while ($row = $result->fetch_assoc()) {
+    $end_time = new DateTime($row['end_time']);
 
-    // 保存到 $data 数组中
-    while ($row = $db->query($sql)->fetch_assoc()) {
+    if ($now <= $end_time) {
         $data[] = $row;
-    }
-
-    // 删除已经结束的课程
-    foreach ($data as $key => $row) {
-        $end_time = new DateTime($row['end_time']);
-
-        if ($now > $end_time) {
-            $sql = "DELETE FROM class_time WHERE id = " . $row['id'];
-            $db->query($sql);
-            unset($data[$key]);
-        }
-    }
-
-    // 如果还有剩余的课程，继续循环
-    if (!empty($data)) {
-        $finish = false;
+    } else {
+        $sql = "DELETE FROM class_time WHERE id = " . $row['id'];
+        $db->query($sql);
     }
 }
 
@@ -56,7 +39,7 @@ while ($finish === false) {
 if (!empty($data)) {
     // 设置响应头，指定以附件形式下载 CSV 文件
     header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="classtimetable.csv"');
+    header('Content-Disposition: attachment; filename="class_data.csv"');
 
     // 打开输出流
     $output = fopen('php://output', 'w');
