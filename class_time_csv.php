@@ -1,24 +1,4 @@
 <?php
-// 检查 URL 参数
-$download = true; // 默认为下载模式
-
-if (isset($_GET['download'])) {
-    // 如果存在 download 参数
-    $downloadValue = $_GET['download'];
-
-    if ($downloadValue === 'false') {
-        // 如果 download 参数的值为 'false'
-        $download = false; // 切换为直接打开模式
-    }
-}
-
-// 设置响应头
-if ($download) {
-    header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="classtimetable.csv"');
-} else {
-    header('Content-Type: text/csv');
-}
 
 // 导入数据库凭证
 require_once 'db_credentials.php';
@@ -58,6 +38,10 @@ while ($row = $result->fetch_assoc()) {
 
 // 输出 CSV 格式的课程信息
 if (!empty($data)) {
+
+    // 设置响应头
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="classtimetable.csv"');
 
     // 打开输出流
     $output = fopen('php://output', 'w');
