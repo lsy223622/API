@@ -36,6 +36,16 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 
+// 如果没有课程了就输出最大时间
+if (empty($data)) {
+    $data[] = array(
+        'start_time' => '2023-01-01 00:00:00',
+        'end_time' => '2026-01-01 00:00:00',
+        'course' => '没课啦',
+        'location' => 'NULL'
+    );
+}
+
 // 输出 CSV 格式的课程信息
 if (!empty($data)) {
 
