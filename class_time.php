@@ -25,6 +25,22 @@ $finish = false;
 while ($finish === false) {
     $finish = true;
 
+    // 如果没有课程了就输出最大时间
+    if ($db->query("SELECT COUNT(*) FROM class_time")->fetch_row()[0] === '0') {
+        echo json_encode(
+            array(
+                'start_time' => '2023-01-01 00:00:00',
+                'end_time' => '2026-01-01 00:00:00',
+                'course' => '没课啦',
+                'location' => 'NULL'
+            )
+            ,
+            JSON_UNESCAPED_UNICODE
+        );
+        $db->close();
+        exit();
+    }
+
     // 获取数据库第一行数据保存到 $row 中
     $sql = "SELECT * FROM class_time ORDER BY id ASC LIMIT 1";
 
