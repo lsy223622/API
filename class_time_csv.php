@@ -36,33 +36,25 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 
-// 如果没有课程了就输出最大时间
-if (empty($data)) {
-    $data[] = array(
-        'start_time' => '2023-01-01 00:00:00',
-        'end_time' => '2026-01-01 00:00:00',
-        'course' => '没课啦',
-        'location' => 'NULL'
-    );
-}
-
 // 输出 CSV 格式的课程信息
-if (!empty($data)) {
 
-    // 设置响应头
-    header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="classtimetable.csv"');
+// 设置响应头
+header('Content-Type: text/csv');
+header('Content-Disposition: attachment; filename="classtimetable.csv"');
 
-    // 打开输出流
-    $output = fopen('php://output', 'w');
+// 打开输出流
+$output = fopen('php://output', 'w');
 
-    // 输出每一行数据
-    foreach ($data as $row) {
-        fputcsv($output, $row);
-    }
-
-    // 关闭输出流
-    fclose($output);
+// 输出每一行数据
+foreach ($data as $row) {
+    fputcsv($output, $row);
 }
+
+// 添加额外的行
+$extraRow = array(999, "2023-01-01 00:00:00", "2030-01-01 00:00:00", "没课啦", NULL);
+fputcsv($output, $extraRow);
+
+// 关闭输出流
+fclose($output);
 
 $db->close();

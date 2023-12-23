@@ -30,7 +30,7 @@ while ($finish === false) {
         echo json_encode(
             array(
                 'start_time' => '2023-01-01 00:00:00',
-                'end_time' => '2026-01-01 00:00:00',
+                'end_time' => '2030-01-01 00:00:00',
                 'course' => '没课啦',
                 'location' => 'NULL'
             )
