@@ -51,7 +51,7 @@ foreach ($data as $row) {
 }
 
 // 添加额外的行
-$extraRow = array(999, "2023-01-01 00:00:00", "2030-01-01 00:00:00", "没课啦", NULL);
+$extraRow = array(999, "2023-01-01 00:00:00", "2030-01-01 00:00:00", "没课啦", "NULL");
 fputcsv($output, $extraRow);
 
 // 关闭输出流
