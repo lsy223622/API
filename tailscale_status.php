@@ -10,18 +10,20 @@ $lines = explode("\n", $content);
 $data = array();
 foreach ($lines as $line) {
     $line = trim($line);
-    if (!empty($line)) {
+    if (!empty($line) && !str_starts_with($line, '#')) {
         $cols = preg_split('/\s+/', $line, 5);
-        $status = isset($cols[4]) ? $cols[4] : '';
-        if ($status === "-") {
-            $status = "online";
+        if (count($cols) >= 4) {
+            $status = isset($cols[4]) ? $cols[4] : '';
+            if ($status === "-") {
+                $status = "online";
+            }
+            $data[] = array(
+                'ip' => $cols[0],
+                'name' => $cols[1],
+                'os' => $cols[2],
+                'status' => $status
+            );
         }
-        $data[] = array(
-            'ip' => $cols[0],
-            'name' => $cols[1],
-            'os' => $cols[2],
-            'status' => $status
-        );
     }
 }
 
